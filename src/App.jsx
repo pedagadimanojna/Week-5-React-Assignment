@@ -1,37 +1,22 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Sidebar from './components/Sidebar';
+import TopPlay from './components/TopPlay';
+import ThemeToggle from './components/ThemeToggle';
+import Discover from './pages/Discover';
+import MusicPlayer from './components/MusicPlayer';
 
-import Sidebar from "./components/Sidebar";
-import Topbar from "./components/Topbar";
+const App = () => (
+  <div className="min-h-screen bg-white text-black dark:bg-gray-900 dark:text-white">
+    <Sidebar />
 
-import Dashboard from "./pages/Dashboard";
-import CalendarPage from "./pages/CalendarPage";
-import Kanban from "./pages/Kanban";
-import Analytics from "./pages/Analytics";
-import Tables from "./pages/Tables";
+    {/* IMPORTANT CHANGE IS pb-32 */}
+    <main className="flex-1 p-6 pb-32">
+      <ThemeToggle />
+      <TopPlay />
+      <Discover />
+    </main>
 
-import ThemeProvider from "./context/ThemeContext";
-import MovieProvider from "./context/MovieContext";
+    <MusicPlayer />
+  </div>
+);
 
-export default function App() {
-  return (
-    <ThemeProvider>
-      <MovieProvider>
-        <BrowserRouter>
-          <Sidebar />
-          <div className="ml-64">
-            <Topbar />
-            <div className="p-6">
-              <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/calendar" element={<CalendarPage />} />
-                <Route path="/kanban" element={<Kanban />} />
-                <Route path="/analytics" element={<Analytics />} />
-                <Route path="/tables" element={<Tables />} />
-              </Routes>
-            </div>
-          </div>
-        </BrowserRouter>
-      </MovieProvider>
-    </ThemeProvider>
-  );
-}
+export default App;

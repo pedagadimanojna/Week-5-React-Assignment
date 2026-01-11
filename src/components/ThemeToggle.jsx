@@ -4,21 +4,15 @@ const ThemeToggle = () => {
   const [theme, setTheme] = useState('dark');
 
   useEffect(() => {
-    if (theme === 'dark') {
-      document.body.classList.add('dark');
-    } else {
-      document.body.classList.remove('dark');
-    }
+    document.documentElement.classList.toggle('dark', theme === 'dark');
   }, [theme]);
 
   return (
     <button
-      onClick={() =>
-        setTheme(theme === 'dark' ? 'light' : 'dark')
-      }
-      className="px-4 py-2 bg-gray-700 text-white rounded"
+      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+      className="px-4 py-2 rounded bg-gray-200 text-black dark:bg-gray-800 dark:text-white"
     >
-      Theme: {theme}
+      {theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
     </button>
   );
 };

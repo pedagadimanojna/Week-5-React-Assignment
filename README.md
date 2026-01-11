@@ -1,2 +1,5 @@
-# # # demo link:https://drive.google.com/file/d/1Jlro3J-SAr_TYQmUS9Jv3uxgNLTgwwYb/view?usp=sharing
+## Week 6 – Music Player Assignment
+# # # screenshots:
+![alt text](<Screenshot 2026-01-11 191506.png>)
+![alt text](<Screenshot 2026-01-11 191529.png>)
 

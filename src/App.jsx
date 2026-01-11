@@ -5,12 +5,15 @@ import Discover from './pages/Discover';
 import MusicPlayer from './components/MusicPlayer';
 
 const App = () => (
-  <div className="min-h-screen bg-white text-black dark:bg-gray-900 dark:text-white">
+  <div className="min-h-screen bg-white text-black dark:bg-gray-900 dark:text-white flex">
     <Sidebar />
 
-    {/* IMPORTANT CHANGE IS pb-32 */}
     <main className="flex-1 p-6 pb-32">
-      <ThemeToggle />
+      {/* Top bar */}
+      <div className="flex justify-end mb-4">
+        <ThemeToggle />
+      </div>
+
       <TopPlay />
       <Discover />
     </main>

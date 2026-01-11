@@ -1,42 +1,51 @@
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { setActiveSong } from '../features/playerSlice';
-import { fetchSongsByGenre } from '../services/musicApi';
-import SongCard from '../components/SongCard';
-import Loader from '../components/Loader';
-import Error from '../components/Error';
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setActiveSong } from "../features/playerSlice";
+import SongCard from "../components/SongCard";
+import { fetchSongsByGenre } from "../services/musicApi";
 
 const Discover = () => {
   const dispatch = useDispatch();
+
+  // restore genre from localStorage or default to All
+  const [genre, setGenre] = useState(
+    localStorage.getItem("genre") || "All"
+  );
   const [songs, setSongs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
 
   useEffect(() => {
-    fetchSongsByGenre()
-      .then((data) => {
-        setSongs(data);
-        setLoading(false);
-      })
-      .catch(() => {
-        setError(true);
-        setLoading(false);
-      });
-  }, []);
-
-  if (loading) return <Loader />;
-  if (error) return <Error />;
+    fetchSongsByGenre(genre).then(setSongs);
+    localStorage.setItem("genre", genre);
+  }, [genre]);
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-      {songs.map((song) => (
-        <SongCard
-          key={song.id}
-          song={song}
-          onPlay={() => dispatch(setActiveSong(song))}
-        />
-      ))}
-    </div>
+    <>
+      <select
+        value={genre}
+        onChange={(e) => setGenre(e.target.value)}
+        className="mb-4 p-2 rounded bg-gray-200 dark:bg-gray-700"
+      >
+        <option>All</option>
+        <option>Pop</option>
+        <option>Rock</option>
+      </select>
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {songs.map((song) => (
+          <SongCard
+            key={song.id}
+            song={song}
+            onPlay={() => {
+              dispatch(setActiveSong(song));
+              localStorage.setItem(
+                "lastSong",
+                JSON.stringify(song)
+              );
+            }}
+          />
+        ))}
+      </div>
+    </>
   );
 };
 
